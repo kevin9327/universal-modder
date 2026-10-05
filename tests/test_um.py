@@ -310,7 +310,7 @@ def test_kb_impossible_date_is_reported_not_raised(tmp_path):
     note = root / "techniques" / "t.md"
     note.write_text("---\nkind: technique\ntitle: t\ntags: [x]\ndate: 2026-09-31\nagents: [a]\n---\n# t\n", encoding="utf-8")
     fails, _ = kb.check_note(note, root)
-    assert any("day is out of range" in f for f in fails), fails
+    assert any("front matter is not valid YAML" in f for f in fails), fails   # the date error's wording varies by Python
     kb.search(root, ["t"])                                             # one bad note must not break search or index
     kb.build_index(root)
 
